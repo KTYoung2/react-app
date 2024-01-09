@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+
+const Father = styled.div`
+  display: flex;
+`;
+
+const BoxOne = styled.div`
+  background-color: tomato;
+  width: 100px; 
+  height: 100px;
+`;
+
+const BoxTwo = styled.div`
+  background-color: aqua; 
+  width: 100px;
+  height: 100px;
+`;
+
+const Text = styled.span`
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  return ( 
+  <Father>
+    <BoxOne />
+      <Text>HELLO</Text>
+    <BoxTwo />
+  </Father>
   );
 }
 
