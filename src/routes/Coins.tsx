@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner} from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import { useQuery } from "react-query";
+import { fetchCoins } from "./api";
+
+
 
 
 const Container = styled.div`
@@ -72,6 +76,8 @@ interface CoinInterface {
 };
 
 function Coins() {
+    const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
+/*
     const [coins, setCoins] = useState<CoinInterface[]>([]);
     const [loading, setLoding] = useState(true);
     useEffect(() => {
@@ -82,18 +88,18 @@ function Coins() {
             setLoding(false);
         }) ()     
     }, []);
-
+*/
     return ( 
     <Container>
         <Header>
         <Title>CoinS🪙</Title>        
         </Header>
-        {loading ? (
+        { isLoading ? (
         <Loader>Loading <FontAwesomeIcon icon={faSpinner} spinPulse />
         </Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} 
                     state={ { name: coin.name } }>
