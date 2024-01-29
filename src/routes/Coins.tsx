@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner} from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
@@ -91,8 +92,12 @@ function Coins() {
 */
     return ( 
     <Container>
+            <Helmet>
+                <title>CoinS</title>
+            </Helmet>
         <Header>
-        <Title>CoinS🪙</Title>        
+        <Title>CoinS🪙</Title> 
+
         </Header>
         { isLoading ? (
         <Loader>Loading <FontAwesomeIcon icon={faSpinner} spinPulse />

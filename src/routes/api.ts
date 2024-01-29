@@ -14,3 +14,11 @@ export function fetchCoinInfo(coinId : string){
 export function fetchCoinTickers(coinId : string){
     return fetch(`${BASE_URL}/tickers/${coinId}`).then((req)=> req.json());
 };
+
+
+export function fetchCoinHistory(coinId:string){
+    return fetch(
+        `https://ohlcv-api.nomadcoders.workers.dev/?coinId=${coinId}`
+        ).then(respons => respons.json());
+};
+        

@@ -1,7 +1,8 @@
 import { Routes, Route, useLocation, useParams, Link, useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner} from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "react-query";
 import {  fetchCoinInfo, fetchCoinTickers } from "./api";
 import styled from "styled-components";
@@ -14,6 +15,7 @@ const Container = styled.div`
     max-width: 480px;
     margin: 0 auto;
 `;
+
 
 const Header = styled.header`
     height : 10vh;
@@ -34,18 +36,28 @@ const Loader = styled.span`
     font-size: 45px;
 `;
 
-const Tab = styled.span<{ isActive : boolean }>`
-    color: ${(props)=> props.isActive ? props.theme.accentColor : props.theme.textColor}
-`;
 
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  a {
+    padding: 7px 0px;
+    display: block;
+  }
+`;
 
 interface LocationState {
     state: {
-        name: string;
-        rank:number;
+        name: string,
+        rank:number,
     }
 };
-
 
 interface InfoData {
     id :string;
@@ -104,8 +116,7 @@ interface PriceData {
   };
 
 
-
-function Coin() {
+function Coin(){
     const { coinId } = useParams();
     const {state} = useLocation() as LocationState;  
     const priceMatch = useMatch("/:coinId/price");
@@ -115,11 +126,19 @@ function Coin() {
             fetchCoinInfo(coinId!));
     const { isLoading : tickersLoading , data : tickersData} = useQuery<PriceData>(
         ["tickers", coinId], ()=>
-             fetchCoinTickers(coinId!));
+             fetchCoinTickers(coinId!), {
+                refetchInterval : 5000,
+             }
+             );
     const loading = infoLoading || tickersLoading;
-    return (  
-    <Container>
+    return(
+        <Container>
+            <Helmet>
+                <title>{state?.name ? state.name : loading ? "Loading" : infoData?.name}</title>
+            </Helmet>
         <Header>
+            <FontAwesomeIcon icon={faArrowLeft} size="xl" style={{color:"#FFD43B",}} />
+            <span>Back</span>
             <Title>{state?.name ? state.name : loading ? "Loading" : infoData?.name}</Title>        
         </Header>
             { loading ? (
@@ -127,26 +146,31 @@ function Coin() {
                     <FontAwesomeIcon icon={faSpinner} spinPulse />
                 </Loader> 
                 ) : (
-                    <ul><h1>Rank:</h1>
-                        <li>{infoData?.rank}</li>
-                    </ul>
-                )}
+                        <span>Rank:{infoData?.rank}</span>
+                    )}  <span>Symbol : ${infoData?.symbol}</span>          
+                        <span>Price: ${tickersData?.quotes.USD.price.toFixed(3)}</span>
+                        <hr />
+                        <span>{infoData?.description}</span>
+                        <hr />
+                        <span>Total Suply : {tickersData?.total_supply}</span>
                 <Tab isActive={chartMatch != null}>
-                    <Link to={`/${coinId}/chart`}>
+                    <Link to="chart" state={{coinId}}>
                         Chart
                     </Link>
                 </Tab>
                 <Tab isActive={priceMatch !== null}>
-                    <Link to={`/${coinId}/price`}>
+                    <Link to={"price"} state={{coinId}}>
                         Price
                     </Link>
                 </Tab>
                 <Routes>
-                    <Route path="chart" element={<Chart/>}></Route>
+                    <Route path="chart" element={<Chart />}></Route>
                     <Route path="price" element={<Price/>}></Route>
                 </Routes>    
         </Container>
-        );
+    )
 };
+
+
 
 export default Coin;
