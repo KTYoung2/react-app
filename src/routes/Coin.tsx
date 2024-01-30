@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, useParams, Link, useMatch } from "react-router-dom";
+import { Routes, Route, useLocation, useParams, Link, useMatch, useOutlet, useOutletContext, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +26,7 @@ const Header = styled.header`
 
 const Title = styled.h1`
     font-size: 48px;
-    color: ${(props) => props.theme.accentColor};
+    color: ${(props) => props.theme.textColor};
 `;
 
 const Loader = styled.span`
@@ -115,10 +115,20 @@ interface PriceData {
     };
   };
 
+const Back = styled.button`
+    border: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+`;
 
 function Coin(){
     const { coinId } = useParams();
     const {state} = useLocation() as LocationState;  
+    const navigate = useNavigate();
+    const backBtn = () => {
+        navigate(-1);
+    };
     const priceMatch = useMatch("/:coinId/price");
     const chartMatch = useMatch("/:coinId/chart");
     const { isLoading : infoLoading, data : infoData } = useQuery<InfoData>(
@@ -137,8 +147,10 @@ function Coin(){
                 <title>{state?.name ? state.name : loading ? "Loading" : infoData?.name}</title>
             </Helmet>
         <Header>
-            <FontAwesomeIcon icon={faArrowLeft} size="xl" style={{color:"#FFD43B",}} />
-            <span>Back</span>
+            <Back onClick={backBtn}>
+                <FontAwesomeIcon icon={faArrowLeft} size="xl" style={{color:"#FFD43B",}} /> 
+                Back
+            </Back>
             <Title>{state?.name ? state.name : loading ? "Loading" : infoData?.name}</Title>        
         </Header>
             { loading ? (

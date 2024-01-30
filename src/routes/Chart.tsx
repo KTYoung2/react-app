@@ -5,7 +5,8 @@ import { fetchCoinHistory } from "./api";
 import { NamedTupleMember } from "typescript";
 import ApexCharts from "react-apexcharts";
 import Price from "./Price";
-
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../routes/atoms";
 interface ChartProps {
     coinId: string;
 
@@ -31,6 +32,7 @@ function Chart(){
             refetchInterval : 10000,
         }
   );
+    const isDark = useRecoilValue(isDarkAtom);
     return (
        <div> { isLoading ? "Loding ... Chart...." : (
        <ApexCharts 
@@ -39,12 +41,11 @@ function Chart(){
             {
                 name : "Price",
                 data : data?.map((price) => price.close) as number[],
-            }
-
+            },
         ]}
         options={{
             theme : {
-                mode : "dark",
+                mode : isDark ? "dark" : "light",
             },
             chart: {
                 height :500,
@@ -52,7 +53,6 @@ function Chart(){
                 toolbar : {
                     show : false,
                 },
-                background: "#2f3640",
             },
             stroke: {
                 curve : "smooth",
@@ -83,7 +83,6 @@ function Chart(){
         /> 
     )} 
     </div>
-
 ); 
 };
 

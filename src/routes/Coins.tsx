@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner} from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faMoon } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoins } from "./api";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 
 
@@ -66,6 +68,8 @@ const Img = styled.img`
     margin-right: 10px;
 `;
 
+
+
 interface CoinInterface {
     id: string,
     name: string,
@@ -76,20 +80,10 @@ interface CoinInterface {
     type: string,
 };
 
+
 function Coins() {
+    const setterFn = useSetRecoilState(isDarkAtom);
     const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
-/*
-    const [coins, setCoins] = useState<CoinInterface[]>([]);
-    const [loading, setLoding] = useState(true);
-    useEffect(() => {
-        (async() => {
-            const response = await fetch("https://api.coinpaprika.com/v1/coins");
-            const json = await response.json();
-            setCoins(json.slice(0,100));
-            setLoding(false);
-        }) ()     
-    }, []);
-*/
     return ( 
     <Container>
             <Helmet>
@@ -97,7 +91,7 @@ function Coins() {
             </Helmet>
         <Header>
         <Title>CoinS🪙</Title> 
-
+        <button onClick={() => setterFn((prev) => !prev)}><FontAwesomeIcon icon={faMoon} size="xl" /></button>
         </Header>
         { isLoading ? (
         <Loader>Loading <FontAwesomeIcon icon={faSpinner} spinPulse />
