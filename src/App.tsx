@@ -1,89 +1,21 @@
-import { useState } from "react";
-import Router from "./Router";
-import { createGlobalStyle } from "styled-components";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from './Theme';
-import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "./routes/atoms";
+import { Outlet } from "react-router-dom";
+import Header from "./ReactRouter/Header";
 
-const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+KR&family=Poppins:wght@300&display=swap');
-  html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, menu, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-main, menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, main, menu, nav, section {
-  display: block;
-}
-/* HTML5 hidden-attribute fix for newer browsers */
-*[hidden] {
-    display: none;
-}
-body {
-  line-height: 1;
-}
-menu, ol, ul {
-  list-style: none;
-}
-blockquote, q {
-  quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: ${(props) => props.theme.bgColor};
-  color : ${(props) => props.theme.textColor};
-}
-
-a {
-  text-decoration: none;
-  color:inherit;
-}
-
-`;
+  /* 
+  <Outlet />
+  하위 경로 요소를 렌더링하려면 상위 경로 요소에서 <Outlet>을 사용해야 한다.
+   이렇게 하면 하위 경로가 렌더링될 때 중첩된 UI가 표시될 수 있습니다. 
+   상위 경로가 정확히 일치하면 하위 경로를 렌더링하거나 경로가 없으면 아무것도 렌더링하지 않습니다.
+  (특정 페이지들끼리 공통적으로 보여줘야 하는 레이아웃이 있을 때 유용하게 사용할 수 있다)
+  */
 
 function App() {
-  const isDark = useRecoilValue(isDarkAtom);
+
   return ( 
-    <>
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <GlobalStyle />
-      <Router/>
-      <ReactQueryDevtools initialIsOpen={true}/>
-    </ThemeProvider>
-    </>
+    <div>
+      <Header />
+      <Outlet />
+    </div>
   );
 }
 
