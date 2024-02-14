@@ -3,6 +3,8 @@ import Home from "./ReactRouter/Home";
 import About from "./ReactRouter/About";
 import App from "./App";
 import NotFound from "./ReactRouter/NotFound";
+import User from "./ReactRouter/User";
+import Followers from "./ReactRouter/Followes";
 
 
 /* createBrowserRouter 는 
@@ -27,6 +29,16 @@ const router = createBrowserRouter([
                 path :"about",
                 element : <About />
             },
+            {
+                path:"users/:userId",
+                element : <User />,
+                children : [
+                    {
+                        path: "followers",
+                        element: <Followers />
+                    }
+                ]
+            }
         ],
         //에러 페이지도 설정 가능. 다른 멀쩡한 페이지가 에러의 영향을 받지 않게 해줌 
         errorElement: <NotFound />

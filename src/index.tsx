@@ -90,7 +90,6 @@ root.render(
     <ThemeProvider theme={lightTheme}>
     <RouterProvider router={router}/>
     <BrowserRouter>
-    <GlobalStyle />
         <App />
     </BrowserRouter>
     </ThemeProvider>

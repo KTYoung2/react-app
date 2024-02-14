@@ -2,6 +2,21 @@ import { useState } from "react";
 import styled from "styled-components"
 
 
+/*
+
+
+TypeScript
+
+개발자가 할 수 있는 사소한 실수들을 코드 실행 전에 잡아주는 유용한 도구.
+ex. const plus = (a + b) => a + b 라는 함수가 있을 때 number만 더하고 싶음
+변수 자료형(type)을 자바스크립트만으로 체크 할 수 없음 ! 이때 타입 스크립트로 타입을 명시해줄 수 있음.
+const plus = (a: number + b: number) => a + b (number) 
+"코드 실행전" 잘못된 자료형이 들어가 있을 경우를 체크해 주어 잘못된 실행 결과를 내놓는 것을 방지할 수 있음. 
+
+즉 타입 스크립트를 사용하는 이유는 "코드가 실행하기 전" 오류를 확인하고 싶어서
+
+ */
+
 interface ContainerProps {
     bgColor : string;
     borderColor?: string;
