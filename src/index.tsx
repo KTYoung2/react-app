@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { darkTheme, lightTheme } from './Theme';
-import { BrowserRouter, RouterProvider } from 'react-router-dom';
-import router from './Router';
+
+
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+KR&family=Poppins:wght@300&display=swap');
@@ -82,16 +82,17 @@ const root = ReactDOM.createRoot(document.getElementById('root')as HTMLElement);
     <ThemeProvider>는 스타일 컴포넌트에서 제공해주는
     컴포넌트라는 걸 잊지 말기 !
 
+    라우터 훅
+    <RouterProvider router={router}/>
+
 */
 
 
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={lightTheme}>
-    <RouterProvider router={router}/>
-    <BrowserRouter>
+    <GlobalStyle />
         <App />
-    </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
 );

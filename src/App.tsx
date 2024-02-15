@@ -1,14 +1,9 @@
-import { Outlet } from "react-router-dom";
-import Header from "./ReactRouter/Header";
-
+import Router from "./Router";
 
 function App() {
 
   return ( 
-    <div>
-      <Header />
-      <Outlet />
-    </div>
+    <Router />
   );
 }
 
