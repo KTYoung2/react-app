@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
-import { darkTheme, lightTheme } from './Theme';
+import { darkTheme } from './Theme';
 
 
 
@@ -90,7 +90,7 @@ const root = ReactDOM.createRoot(document.getElementById('root')as HTMLElement);
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={darkTheme}>
     <GlobalStyle />
         <App />
     </ThemeProvider>
