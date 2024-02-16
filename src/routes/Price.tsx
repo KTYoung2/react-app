@@ -12,7 +12,7 @@ const PriceList = styled.ul`
 
 
 const CoinPrice = styled.li`
-    background-color:rgba(0, 0, 0, 0.5);
+    background-color: ${(props)=> props.theme.borderColor};
     color : ${(props)=> props.theme.accentColor};
     font-weight: bold;
     margin-bottom: 10px;

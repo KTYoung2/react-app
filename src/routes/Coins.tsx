@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 //페이지가 새로고침 되지 않게 하기 위해 a href 아닌 -> Link 쓰는 것 
@@ -26,7 +25,7 @@ const CoinsList = styled.ul`
 `;
 
 const Coin = styled.li`
-    background-color:rgba(0, 0, 0, 0.5);
+    background-color:${(props)=> props.theme.borderColor};
     color : ${(props)=> props.theme.textColor};
     font-weight: bold;
     margin-bottom: 10px;
