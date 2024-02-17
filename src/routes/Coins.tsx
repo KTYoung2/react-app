@@ -6,6 +6,7 @@ import { fetchCoins } from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
+import { useState } from "react";
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -65,6 +66,7 @@ const Img = styled.img`
 
 
 
+
 interface ICoins{
     id: string,
     name: string,
@@ -74,6 +76,10 @@ interface ICoins{
     is_active: boolean,
     type: string,
     isLoaing : boolean,
+}
+
+interface ISearch {
+    search : string;
 }
 
     /*  
@@ -93,6 +99,16 @@ interface ICoins{
 
 function Coins() {
     const { isLoading, data } = useQuery<ICoins[]>("allCoins", fetchCoins);
+    const [search, setSearch] = useState("");
+    const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+        setSearch(event.currentTarget.value);
+        console.log(setSearch);
+    }
+
+    const filterTitle = data?.filter((coins)=> {
+        return coins.name.toLowerCase().includes(search.toLowerCase().replace(" ", ""));
+    })
+    
     return ( 
         <Container>
         <Helmet>
@@ -101,6 +117,16 @@ function Coins() {
             <Header>
                 <Title>COINS🪙</Title>
             </Header>
+            <div>
+                <input value={search} 
+                        type="text" 
+                        placeholder="Search for coins" 
+                        onChange={onChange}/>
+                <button>search</button>
+                {filterTitle?.map( coins=> 
+                    <h1>{coins.name}</h1>
+                )}
+            </div>
             { isLoading ? <Loader>Loding <FontAwesomeIcon icon={faSpinner} spinPulse /></Loader> : (
             <CoinsList>
                 {data?.map((coin) =>(
@@ -113,8 +139,7 @@ function Coins() {
             </CoinsList> 
             )}
         </Container>
-        
- );
+    );
   }
   
   export default Coins;

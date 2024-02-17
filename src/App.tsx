@@ -3,7 +3,9 @@ import { ReactQueryDevtools } from "react-query/devtools";
     //리액트 쿼리의 모든 내부 작동을 시각화하는데 도움이 되며 오류발생시 디버깅 시간 절약가능 ! 
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { darkTheme, lightTheme } from "./Theme";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUp } from "@fortawesome/free-solid-svg-icons";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+KR&family=Poppins:wght@300&display=swap');
@@ -81,9 +83,32 @@ const DarkBtn = styled.button`
 
 `;
 
+const Footer = styled.div`
+    width: 100%;
+    top : 50%;
+    display: flex;
+    justify-content: center;
+    padding-left:900px;
+`;
+
+const TopBtn = styled.button`
+    font-size: 40px;
+    border: none;
+    background-color: ${(props)=> props.theme.bgColor};
+    cursor: pointer;
+`;
+
+
+
 function App() {
   const [ isDark, setIsDark ] = useState(true);
   const toggleDark = () =>setIsDark((current) => !current);
+  const onClick = () => {
+    window.scroll ({
+        top : 0,
+        behavior : "smooth"
+    })
+};
   return ( 
     <>
     <ThemeProvider theme={ isDark ? darkTheme : lightTheme}>
@@ -92,6 +117,11 @@ function App() {
       <Router />
       <ReactQueryDevtools initialIsOpen={true}/>
     </ThemeProvider>
+      <Footer>
+            <TopBtn onClick={onClick}>
+              <FontAwesomeIcon icon={faCircleUp} color={"#ffa502"} />
+            </TopBtn>
+        </Footer>
     </>
   );
 }
