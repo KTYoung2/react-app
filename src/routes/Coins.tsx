@@ -45,6 +45,7 @@ const Coin = styled.li`
 `;
 
 const Title = styled.h1`
+    padding-bottom: 25px;
     font-weight: bold;
     font-size: 50px;
     color: ${(props)=> props.theme.accentColor};
@@ -64,7 +65,32 @@ const Img = styled.img`
     margin-right: 10px;
 `;
 
+const Search = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 15px;
+`;
 
+const Input = styled.input`
+    font-size: 17px;
+    color: ${(props)=>props.theme.textColor};
+    width: 350px;
+    border: none;
+    border-bottom: solid #aaaaaa 2px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    background: none;
+    transition: 0.5s;
+    &:focus {
+        outline: none; 
+    }
+    &:hover {
+
+        border-bottom: solid #ffa502 2px;
+    }
+`;
 
 
 interface ICoins{
@@ -78,9 +104,7 @@ interface ICoins{
     isLoaing : boolean,
 }
 
-interface ISearch {
-    search : string;
-}
+
 
     /*  
         useQuery()
@@ -100,14 +124,14 @@ interface ISearch {
 function Coins() {
     const { isLoading, data } = useQuery<ICoins[]>("allCoins", fetchCoins);
     const [search, setSearch] = useState("");
+    const filterTitle = data?.filter((coins)=> {
+            return coins.name.toLowerCase().includes(search.toLowerCase().replace(" ", ""));
+        }) 
+
     const onChange = (event: React.FormEvent<HTMLInputElement>) => {
         setSearch(event.currentTarget.value);
-        console.log(setSearch);
-    }
+    };
 
-    const filterTitle = data?.filter((coins)=> {
-        return coins.name.toLowerCase().includes(search.toLowerCase().replace(" ", ""));
-    })
     
     return ( 
         <Container>
@@ -117,30 +141,26 @@ function Coins() {
             <Header>
                 <Title>COINS🪙</Title>
             </Header>
-            <div>
-                <input value={search} 
+            <Search>       
+               <Input  value={search} 
                         type="text" 
                         placeholder="Search for coins" 
                         onChange={onChange}/>
-                <button>search</button>
-                {filterTitle?.map( coins=> 
-                    <h1>{coins.name}</h1>
-                )}
-            </div>
+            </Search>
             { isLoading ? <Loader>Loding <FontAwesomeIcon icon={faSpinner} spinPulse /></Loader> : (
             <CoinsList>
-                {data?.map((coin) =>(
+                { filterTitle?.map((coin) => (
                 <Coin key={coin.id}> 
                     <Link to={`/${coin.id}`} state={ { name: coin.name }}>
                     <Img src={`https://cryptocurrencyliveprices.com/img/${coin.id}.png`} />
                         {coin.name} &rarr;</Link>
                 </Coin>
-                ))}
+                ))} 
             </CoinsList> 
             )}
         </Container>
     );
-  }
+                }
   
   export default Coins;
   

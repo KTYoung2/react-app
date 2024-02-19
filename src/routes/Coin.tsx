@@ -17,17 +17,16 @@ const Container = styled.div`
 const Header = styled.header`
     height: 10vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-`;
+    justify-content: space-between;
+
+  `;
 
 
 const Title = styled.h1`
-    text-align: center;
+    padding-bottom: 50px;
     font-weight: bold;
     font-size: 50px;
     color: ${(props)=> props.theme.accentColor};
-
 `;
 
 const Loader = styled.span`
@@ -83,8 +82,7 @@ const Tab = styled.span<{ isActive:boolean }>`
 `;
 
 const BackBtn = styled.button`
-    text-align: left;
-    padding-right: 15px;
+    font-size: 35px;
     border: none;
     background-color: ${(props)=> props.theme.bgColor};
     cursor: pointer;
@@ -181,7 +179,7 @@ function Coin() {
         </Helmet>
         <Header>
             <BackBtn onClick={onClick}>
-                <FontAwesomeIcon icon={faCircleChevronLeft} size={"2xl"} color={"#ffa502"} />
+                <FontAwesomeIcon icon={faCircleChevronLeft} color={"#ffa502"} />
             </BackBtn>
             <Title>{state?.name ? state.name : loading ? "Loading" : infoData?.name }</Title>
         </Header>
