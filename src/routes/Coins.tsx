@@ -93,14 +93,6 @@ const Input = styled.input`
     }
 `;
 
-const DarkBtn = styled.button`
-    font-size: 40px;
-    border: none;
-    background-color: ${(props)=> props.theme.bgColor};
-    cursor: pointer;
-
-`;
-
 
 
 interface ICoins{
