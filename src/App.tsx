@@ -6,6 +6,8 @@ import { darkTheme, lightTheme } from "./Theme";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUp } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+KR&family=Poppins:wght@300&display=swap');
@@ -101,8 +103,11 @@ const TopBtn = styled.button`
 
 
 function App() {
-  const [ isDark, setIsDark ] = useState(true);
-  const toggleDark = () =>setIsDark((current) => !current);
+  //아톰 값 불러오기. useRecoilValue(불러올 아톰 함수)
+  const isDark = useRecoilValue(isDarkAtom);
+  //atom value  Set(설정)수정하는 함수
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDark = () => setDarkAtom(((prev)=> !prev));
   const onClick = () => {
     window.scroll ({
         top : 0,

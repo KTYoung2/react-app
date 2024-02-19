@@ -8,6 +8,7 @@ import { faSpinner, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
 
+
 const Container = styled.div`
     padding: 0px 20px;
     max-width: 480px;
@@ -22,7 +23,7 @@ const Header = styled.header`
 `;
 
 const CoinsList = styled.ul`
-    padding-top: 20px;
+    padding-top: 30px;
 `;
 
 const Coin = styled.li`
@@ -92,6 +93,15 @@ const Input = styled.input`
     }
 `;
 
+const DarkBtn = styled.button`
+    font-size: 40px;
+    border: none;
+    background-color: ${(props)=> props.theme.bgColor};
+    cursor: pointer;
+
+`;
+
+
 
 interface ICoins{
     id: string,
@@ -127,12 +137,9 @@ function Coins() {
     const filterTitle = data?.filter((coins)=> {
             return coins.name.toLowerCase().includes(search.toLowerCase().replace(" ", ""));
         }) 
-
     const onChange = (event: React.FormEvent<HTMLInputElement>) => {
         setSearch(event.currentTarget.value);
     };
-
-    
     return ( 
         <Container>
         <Helmet>
