@@ -18,16 +18,17 @@ const Header = styled.header`
     height: 10vh;
     display: flex;
     justify-content: space-between;
-
+    padding-top: 10px;
   `;
 
 
 const Title = styled.h1`
+    display: flex;
+    justify-items: center;
     padding-bottom: 50px;
     font-weight: bold;
     font-size: 50px;
     color: ${(props)=> props.theme.accentColor};
-
 `;
 
 const Loader = styled.span`
@@ -43,6 +44,7 @@ const Overview = styled.div`
   background-color: ${(props)=> props.theme.borderColor};
   padding: 10px 20px;
   border-radius: 10px;
+
 `;
 
 const OverviewItem = styled.div`

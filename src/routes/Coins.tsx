@@ -20,6 +20,7 @@ const Header = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
 `;
 
 const CoinsList = styled.ul`

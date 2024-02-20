@@ -3,7 +3,6 @@ import { ReactQueryDevtools } from "react-query/devtools";
     //리액트 쿼리의 모든 내부 작동을 시각화하는데 도움이 되며 오류발생시 디버깅 시간 절약가능 ! 
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { darkTheme, lightTheme } from "./Theme";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUp } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -78,22 +77,25 @@ a {
 `;
 
 const DarkBtn = styled.button`
+    position: fixed;  
+    bottom: 40px; 
+    right: 140px;
     font-size: 40px;
     border: none;
-    background-color: ${(props)=> props.theme.bgColor};
     cursor: pointer;
-
+    background-color: ${(props)=> props.theme.bgColor};
 `;
 
 const Footer = styled.div`
-    width: 100%;
-    top : 50%;
-    display: flex;
-    justify-content: center;
-    padding-left:900px;
+  position: relative;
+  padding: 30px;
+  background-color: ${(props)=> props.theme.bgColor};
 `;
 
 const TopBtn = styled.button`
+    position: fixed;  
+    bottom: 40px; 
+    right: 65px;
     font-size: 40px;
     border: none;
     background-color: ${(props)=> props.theme.bgColor};
@@ -108,25 +110,26 @@ function App() {
   //atom value  Set(설정)수정하는 함수
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDark = () => setDarkAtom(((prev)=> !prev));
+ 
   const onClick = () => {
     window.scroll ({
         top : 0,
         behavior : "smooth"
-    })
+    });
 };
   return ( 
     <>
     <ThemeProvider theme={ isDark ? darkTheme : lightTheme}>
-    <DarkBtn onClick={toggleDark}>{ isDark === false ? "🌛" : "🌞"}</DarkBtn>
     <GlobalStyle />
       <Router />
       <ReactQueryDevtools initialIsOpen={true}/>
     </ThemeProvider>
       <Footer>
             <TopBtn onClick={onClick}>
-              <FontAwesomeIcon icon={faCircleUp} color={"#ffa502"} />
+             <FontAwesomeIcon icon={faCircleUp} color={"#ffa502"} />
             </TopBtn>
-        </Footer>
+            <DarkBtn onClick={toggleDark}>{ isDark === false ? "🌛" : "🌞"}</DarkBtn>
+      </Footer>
     </>
   );
 }
